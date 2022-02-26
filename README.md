@@ -176,7 +176,7 @@ plt.show()
 
 
 
-![png](output_11_1.png)
+![output_11_1](https://user-images.githubusercontent.com/43382657/155846664-c69a9510-af52-47ba-918d-98c27536a8c9.png)
 
 
 #### **将训练集的图像集和标签路径写入datas中**
