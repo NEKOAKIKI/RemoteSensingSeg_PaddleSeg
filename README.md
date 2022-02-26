@@ -133,12 +133,6 @@ eiseg
 
 ![](https://ai-studio-static-online.cdn.bcebos.com/4defd4610c914422b68dd78b42df807a08e54358ea4e41a3acfc8d3ff66e45f0)
 
-
-#### **视频演示**
-<video id="video" controls="" preload="none" >
-      <source id="webm" src="EISeg.mp4" type="video/webm">
-</videos>
-
 #### **标注效果**
 原图：  
 ![](https://ai-studio-static-online.cdn.bcebos.com/639ebcbbcf4b4cd7a4c7c3db2b61d75f5000e55ec285443da76e2f1b09d9730a)  
