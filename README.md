@@ -74,7 +74,7 @@ EISeg(Efficient Interactive Segmentation)是基于飞桨开发的一个高效智
 
 #### **模型准备**
 在使用EIseg前，请先下载模型参数。EISeg开放了在COCO+LVIS和大规模人像数据上训练的四个标注模型，满足通用场景和人像场景的标注需求。其中模型结构对应EISeg交互工具中的网络选择模块，用户需要根据自己的场景需求选择不同的网络结构和加载参数。  
-本项目选用的是
+本项目选用的是[hrnet18_ocr64_cocolvis](https://bj.bcebos.com/paddleseg/dygraph/interactive_segmentation/ritm/hrnet18_ocr64_cocolvis.pdparams)模型。
 | 模型类型 | 适用场景 | 模型结构 | 下载地址|
 | --- | --- | --- | ---|
 | **高精度模型**  | **适用于通用场景的图像标注。** | **HRNet18_OCR64** | **[hrnet18_ocr64_cocolvis](https://bj.bcebos.com/paddleseg/dygraph/interactive_segmentation/ritm/hrnet18_ocr64_cocolvis.pdparams)** |
@@ -111,19 +111,40 @@ eiseg
 
    选择合适的网络，并加载对应的模型参数。目前在EISeg中，网络分为`HRNet18s_OCR48`和`HRNet18_OCR64`，并分别提供了人像和通用两种模型参数。在正确加载模型参数后，右下角状态栏会给予说明。若网络参数与模型参数不符，将会弹出警告，此时加载失败需重新加载。正确加载的模型参数会记录在`近期模型参数`中，可以方便切换，并且下次打开软件时自动加载退出时的模型参数。
 
+![](https://ai-studio-static-online.cdn.bcebos.com/20493e7446454ea6bc3f7648009ead3b700c8690aaee43cebedf4d97bec7125b)
+
 2. **图像加载**
 
-   打开图像/图像文件夹。当看到主界面图像正确加载，`数据列表`正确出现图像路径即可。
+   文件$\to$打开图像/图像文件夹。当看到主界面图像正确加载，`数据列表`正确出现图像路径即可。
+
+![](https://ai-studio-static-online.cdn.bcebos.com/0475e4cbeb274e89a970b710f12dd2c84201903098ec40b3b6dcef4e02ba203a)
 
 3. **标签添加/加载**
 
    添加/加载标签。可以通过`添加标签`新建标签，标签分为4列，分别对应像素值、说明、颜色和删除。新建好的标签可以通过`保存标签列表`保存为txt文件，其他合作者可以通过`加载标签列表`将标签导入。通过加载方式导入的标签，重启软件后会自动加载。
+   
+![](https://ai-studio-static-online.cdn.bcebos.com/b615d151e77844fbadc14a4113c8edfcec44e4496fd148e68bbe0288828434c7)
 
 4. **自动保存设置**
 
    在使用中可以将`自动保存`设置上，设定好文件夹即可，这样在使用时切换图像会自动将完成标注的图像进行保存。
 
-当设置完成后即可开始进行标注，默认情况下常用的按键/快捷键如下，如需修改可按`E`弹出快捷键修改。
+当设置完成后即可开始进行标注。  
+
+![](https://ai-studio-static-online.cdn.bcebos.com/4defd4610c914422b68dd78b42df807a08e54358ea4e41a3acfc8d3ff66e45f0)
+
+
+#### **视频演示**
+<video id="video" controls="" preload="none" >
+      <source id="webm" src="EISeg.mp4" type="video/webm">
+</videos>
+
+#### **标注效果**
+原图：  
+![](https://ai-studio-static-online.cdn.bcebos.com/639ebcbbcf4b4cd7a4c7c3db2b61d75f5000e55ec285443da76e2f1b09d9730a)  
+伪彩色标注：  
+![](https://ai-studio-static-online.cdn.bcebos.com/335c7cdfa5fa428799ba49cae50685bab4090434ef574a30ac033ff9957cfbcd)  
+
 
 ### 4. 构造数据集
 
