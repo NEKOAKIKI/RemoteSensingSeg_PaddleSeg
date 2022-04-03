@@ -242,8 +242,7 @@ visualize(datas[15][1], 3, "relabeled " + datas[15][1][-10:])
     total: 4940
 
 
-
-![png](output_14_1.png)
+![output_14_1](https://user-images.githubusercontent.com/43382657/161445178-8a2d3a70-22d2-4890-93a3-c7ca037c6f81.png)
 
 
 #### **将训练集、测试集图片路径写入txt文件**
@@ -562,7 +561,7 @@ for i in img_list:
 ```
 
 
-![png](output_42_0.png)
+![output_42_0](https://user-images.githubusercontent.com/43382657/161445196-3be9851e-7e34-4d4f-abe0-97707033093c.png)
 
 
 ## 七、总结
