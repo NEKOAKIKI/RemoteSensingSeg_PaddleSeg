@@ -52,10 +52,6 @@ HarDNet可以用于图像分割、目标检测和语义分割，其架构是基�
 !pip install -q paddleseg==2.4.0
 ```
 
-    [33mWARNING: You are using pip version 21.3.1; however, version 22.0.4 is available.
-    You should consider upgrading via the '/opt/conda/envs/python35-paddle120-env/bin/python -m pip install --upgrade pip' command.[0m
-
-
 ### 2. 解压数据集
 
 
@@ -66,14 +62,6 @@ HarDNet可以用于图像分割、目标检测和语义分割，其架构是基�
 # 查看文件目录
 !tree data/data55589 -d
 ```
-
-    data/data55589
-    └── WHDLD
-        ├── Images
-        └── ImagesPNG
-    
-    3 directories
-
 
 ### 3. EISeg标注数据演示
 > [EISeg官方文档](https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.2/contrib/EISeg)
@@ -154,9 +142,6 @@ eiseg
 
 ### 4. 构造数据集
 
-#### **数据增强**
-对数据集中的数据提高对比度、饱和度
-
 #### **修改数据集标签**
 数据集提供的标注是1-6，这里改为0-5
 
@@ -188,9 +173,6 @@ for d in trange(len(label_dir_list)):
     new_im = Image.fromarray(im.astype(np.uint8), mode='P')
     new_im.save(os.path.join(relab_path, label_dir_list[d]))
 ```
-
-    100%|██████████| 4940/4940 [22:43<00:00,  3.67it/s]
-
 
 #### **将训练集的图像集和标注路径写入datas中并抽样可视化**
 - 左：原图
@@ -260,6 +242,10 @@ visualize(datas[15][1], 3, "relabeled " + datas[15][1][-10:])
     total: 4940
 
 
+
+![png](output_14_1.png)
+
+
 #### **将训练集、测试集图片路径写入txt文件**
 
 
@@ -320,13 +306,14 @@ val_path = 'data/val_list.txt'  # 验证集txt文件
 
 # 定义训练时的transforms
 train_transforms = [
-    T.RandomHorizontalFlip(0.5),  # 随机水平翻转
-    T.RandomVerticalFlip(0.5),  # 随机垂直翻转
-    # T.RandomDistort(
-    #     brightness_range=0.2, brightness_prob=0.5,
-    #     contrast_range=0.2, contrast_prob=0.5,
-    #     saturation_range=0.2, saturation_prob=0.5,
-    #     hue_range=15, hue_prob=0.5),
+    T.RandomHorizontalFlip(0.5),
+    T.RandomVerticalFlip(0.5),
+    T.RandomDistort(
+        brightness_range=0.2, brightness_prob=0.5,
+        contrast_range=0.2, contrast_prob=0.5,
+        saturation_range=0.2, saturation_prob=0.5,
+        hue_range=15, hue_prob=0.5),
+    T.RandomPaddingCrop(crop_size=(256, 256)),
     T.Resize(target_size=(256, 256)),
     T.Normalize()
 ]
@@ -359,22 +346,14 @@ eval_dataset = Dataset(transforms = eval_transforms,
 
 ```python
 from paddleseg.models import HarDNet
-from paddleseg.models import UNet
 
 # 设置迭代次数
 iters = 10000
 # 设置batch_size
 batch_size = 128
 # 选用HarDNet模型
-model = HarDNet(num_classes=num_classes, pretrained="model/model.pdparams")
-
-# 选用UNet模型
-# model = UNet(num_classes=num_classes)
+model = HarDNet(num_classes=num_classes)
 ```
-
-    2022-03-21 17:57:34 [INFO]	Loading pretrained model from model/model.pdparams
-    2022-03-21 17:57:34 [INFO]	There are 347/347 variables loaded into HarDNet.
-
 
 #### **构建优化器**
 
@@ -384,7 +363,7 @@ import paddle
 import paddleseg
 
 # 设置学习率
-base_lr = 0.001
+base_lr = 0.03
 lr = paddle.optimizer.lr.PolynomialDecay(
     base_lr, 
     power=0.9, 
@@ -446,7 +425,7 @@ evaluate(
 )
 ```
 
-经过10000次训练，mIOU可以达到0.69左右，Acc可达0.87左右。
+经过10000次训练，mIOU可以达到0.69左右。
 ```
 2022-03-17 15:19:50 [INFO]	[EVAL] #Images: 493 mIoU: 0.6923 Acc: 0.8736 Kappa: 0.8222 Dice: 0.8087
 2022-03-17 15:19:50 [INFO]	[EVAL] Class IoU: 
@@ -581,6 +560,10 @@ for i in img_list:
     plt.imshow(img)
     cnt += 1
 ```
+
+
+![png](output_42_0.png)
+
 
 ## 七、总结
 本项目仅用来熟悉PaddleSeg使用流程，日后有机会会对模型进行进一步优化。
